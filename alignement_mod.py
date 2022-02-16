@@ -1,21 +1,22 @@
-from lib2to3.pygram import pattern_symbols
 import re
-
 import os
+
 #version environnement unix
-#os.chdir("/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus")
+os.chdir("/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP")
+
 #version environnement windows
-os.chdir("C://Users//elisa//Downloads//Enrichissement de corpus//")
+#os.chdir("C://Users//elisa//Downloads//Enrichissement de corpus//")
  
 #### Ouverture des fichiers
+
 #version environnement unix
-#f = "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/resultat.txt"
+f = "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/aresultat.txt"
+g= "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP/texte_tokenize.txt"
+
 #version environnement windows
-f = "C://Users//elisa//Downloads//Enrichissement de corpus//resultat.txt"
-#version environnement unix
-#g= "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/texte_tokenize.txt"
-#version environnement windows
-g= "C://Users//elisa//Downloads//Enrichissement de corpus//texte_tokenize.txt"
+#f = "C://Users//elisa//Downloads//Enrichissement de corpus//resultat.txt"
+#g= "C://Users//elisa//Downloads//Enrichissement de corpus//texte_tokenize.txt"
+
 auto_tok_text = open(f, "r", encoding="utf-8")
 man_tok_text = open(g, "r", encoding="utf-8")
 textes = open("texts_together.txt", "w", encoding="utf-8")
@@ -52,68 +53,58 @@ i=1 #i if for automatically tokenized file
 j=1 #j is for manual tokenized file
 vrai_positif=0
 
-while j < len(man_lines):
-    while i <len(auto_lines):
+while j < len(man_lines) or i <len(auto_lines): #On parcourt la totalité des lignes du fichiers
+    
         print(i,j)
-        auto_word = clean_word(auto_lines,i)
-        man_word = clean_word(man_lines,j)
-        auto_pos = clean_pos(auto_lines,i)
-        man_pos = clean_pos(man_lines,j)
+
+        auto_word = clean_word(auto_lines,i)   #On récupère le mot annoté automatiquement
+        man_word = clean_word(man_lines,j)     #On récupère le mot annoté manuellement 
+        auto_pos = clean_pos(auto_lines,i)     #On récupère de pos annoté automatiquement
+        man_pos = clean_pos(man_lines,j)       #On récupère le pos annoté manuellement
 
 
-        if len(auto_word) > len(man_word) :
-            print(auto_word,man_word)
-            print(auto_pos,man_pos)
+        if len(auto_word) > len(man_word) : #Si la taille du mot annoté automatiquement est > à celui annoté manuellement, on considère que c'est parceque le mot est réparti en deux parties sur l'annotation manuelle
             textes.write(auto_word+" " +man_word+"\n")
-            textes.write(auto_pos+" " +man_pos+"\n")
+            differences.write("-")
             j += 1
             man_wordplus1=clean_word(man_lines,j)
-            man_posplus1 = clean_pos(man_lines,j)
-            print(auto_word,man_wordplus1)
-            print(auto_pos,man_posplus1)
-            differences.write("-")
             textes.write(auto_word+" " +man_wordplus1+"\n")
-            textes.write(auto_pos+" " +man_posplus1+"\n")
+            differences.write("-")
 
-        elif len(auto_word) < len(man_word) :
-            print(auto_word,man_word)
-            print(auto_pos,man_pos)
+        elif len(auto_word) < len(man_word) : #et inversement
             textes.write(auto_word+" " +man_word+"\n")
-            textes.write(auto_pos+" " +man_pos+"\n")
+            differences.write("-")
             i += 1
             auto_wordplus1=clean_word(auto_lines,i)
-            auto_posplus1=clean_pos(auto_lines,i)
             print(auto_wordplus1,man_word)
-            print(auto_posplus1,man_pos)
+            textes.write(auto_word+" " +man_wordplus1+"\n")
             differences.write("-")
-            textes.write(auto_wordplus1 + " " + man_word+ "\n")
-            textes.write(auto_posplus1 + " " + man_pos+ "\n")
 
-        else:   
+        else:                                   #Si les deux mots ont la même taille, on peut regarder le POS et vérifier leur adéquation
             print(auto_word,man_word)
-            print(auto_pos,man_pos)
+            textes.write(auto_word+" " +man_word+"\n")
             if auto_pos == man_pos :
                 vrai_positif +=1 
                 differences.write("+")
-                textes.write(auto_word+" " +man_word+"\n")
-                textes.write(auto_pos+" " +man_pos+"\n")
+            else :
+                differences.write("-")
 
         i += 1
         j += 1
-
-print(vrai_positif)
 
 #### Fermeture des fichiers
 auto_tok_text.close()
 man_tok_text.close()
 textes.close()
-differences.close()
 
 #### Calcul précision, rappel et f-mesure
 p = (vrai_positif)/(len(man_lines))
 r = (vrai_positif)/(len(auto_lines))
-f= 2*(p*r)/(p+r)
+if p!=0 or r!=0 : #On evite le cas où la précision et le rappel seraient == 0 pour les 2 premières décimal (python arrondi alors à 0)
+    f= 2*(p*r)/(p+r)
+else :
+    f = 'div/zero'
 
-print('precision : %f \n rappel : %f \n f-mesure : %f' %(p,r,f))
+print('precision : %f\n rappel : %f\n f-mesure : %f' %(p,r,f))
 
 exit()
