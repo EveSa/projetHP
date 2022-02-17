@@ -19,7 +19,7 @@ g= "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP/tex
 
 auto_tok_text = open(f, "r", encoding="utf-8")
 man_tok_text = open(g, "r", encoding="utf-8")
-textes = open("texts_together.txt", "w", encoding="utf-8")
+textes = open("desaccords.txt", "w", encoding="utf-8")
 differences = open("differences.txt", "w", encoding="utf-8")
 
 #### Lecture des fichiers
@@ -65,28 +65,35 @@ while j < len(man_lines) or i <len(auto_lines): #On parcourt la totalité des li
 
         if len(auto_word) > len(man_word) : #Si la taille du mot annoté automatiquement est > à celui annoté manuellement, on considère que c'est parceque le mot est réparti en deux parties sur l'annotation manuelle
             textes.write(auto_word+" " +man_word+"\n")
+            textes.write(auto_pos+" " +man_pos+"\n")
             differences.write("-")
             j += 1
             man_wordplus1=clean_word(man_lines,j)
+            man_posplus1=clean_pos(man_lines,j)
             textes.write(auto_word+" " +man_wordplus1+"\n")
+            textes.write(auto_pos+" " +man_posplus1+"\n")
             differences.write("-")
 
         elif len(auto_word) < len(man_word) : #et inversement
             textes.write(auto_word+" " +man_word+"\n")
+            textes.write(auto_pos+" " +man_pos+"\n")
             differences.write("-")
             i += 1
             auto_wordplus1=clean_word(auto_lines,i)
+            man_posplus1=clean_pos(man_lines,i)
             print(auto_wordplus1,man_word)
             textes.write(auto_word+" " +man_wordplus1+"\n")
+            textes.write(auto_pos+" " +man_posplus1+"\n")
             differences.write("-")
 
         else:                                   #Si les deux mots ont la même taille, on peut regarder le POS et vérifier leur adéquation
             print(auto_word,man_word)
-            textes.write(auto_word+" " +man_word+"\n")
             if auto_pos == man_pos :
                 vrai_positif +=1 
                 differences.write("+")
             else :
+                textes.write(auto_word+" " +man_word+"\n")
+                textes.write(auto_pos+" " +man_pos+"\n")
                 differences.write("-")
 
         i += 1
