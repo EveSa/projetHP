@@ -1,24 +1,24 @@
-from lib2to3.pygram import pattern_symbols
 import re
-
 import os
+
 #version environnement unix
 #os.chdir("/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus")
+
 #version environnement windows
 os.chdir("C://Users//elisa//Downloads//Enrichissement de corpus//")
  
 #### Ouverture des fichiers
 #version environnement unix
-#f = "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/resultat.txt"
+#f = "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/texte_tagge_auto.txt"
 #version environnement windows
-f = "C://Users//elisa//Downloads//Enrichissement de corpus//resultat.txt"
+f = "C://Users//elisa//Downloads//Enrichissement de corpus//texte_tagge_auto.txt"
 #version environnement unix
-#g= "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/texte_tokenize.txt"
+#g= "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/texte_tagge_man.txt"
 #version environnement windows
-g= "C://Users//elisa//Downloads//Enrichissement de corpus//texte_tokenize.txt"
+g= "C://Users//elisa//Downloads//Enrichissement de corpus//texte_tagge_man.txt"
 auto_tok_text = open(f, "r", encoding="utf-8")
 man_tok_text = open(g, "r", encoding="utf-8")
-textes = open("texts_together.txt", "w", encoding="utf-8")
+textes = open("textes_ensemble.txt", "w", encoding="utf-8")
 differences = open("differences.txt", "w", encoding="utf-8")
 
 #### Lecture des fichiers
