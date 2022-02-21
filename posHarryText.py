@@ -22,7 +22,7 @@ jar="/home/eve/Bureau/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP/stanf
 model="/home/eve/Bureau/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP/stanford-postagger-full-2020-11-17/models/french-ud.tagger"
 f="/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP/Harry_Potter_T4_Ch6-P1-2.txt"
 
-resultat = open("resultat.txt", "w", encoding="utf-8")
+resultat = open("autoTokenized.txt", "w", encoding="utf-8")
 
 text = open(f, encoding="utf-8").read()
 
