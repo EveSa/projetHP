@@ -1,21 +1,11 @@
 import re
-import os
-
-#version environnement unix
-os.chdir("/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/projetHP")
-
-#version environnement windows
-#os.chdir("C://Users//elisa//Downloads//Enrichissement de corpus//")
+import sys
  
 #### OUVERTURE DES FICHIERS ####
 
-#version environnement unix
-f = "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/projetHP/autoTokenized.txt"
-g= "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/projetHP/manuallyTokenized.txt"
-
-#version environnement windows
-#f = "C://Users//elisa//Downloads//Enrichissement de corpus//resultat.txt"
-#g= "C://Users//elisa//Downloads//Enrichissement de corpus//texte_tokenize.txt"
+f = sys.argv[1]
+print(f)
+g= "manuallyTokenized.txt"
 
 auto_tok_text = open(f, "r", encoding="utf-8")
 man_tok_text = open(g, "r", encoding="utf-8")
@@ -25,15 +15,17 @@ textes = open("POSDifferences.txt", "w", encoding="utf-8")
 
 auto_lines=auto_tok_text.readlines()
 man_lines=man_tok_text.readlines()
-max_lenght=max(len(auto_lines),len(man_lines))
+auto_tok_text.close()
+man_tok_text.close()
 
 #### DEFINITION DES FONCTIONS ####
 
 def clean(lines,index,value):
+    "Cette fonction permet de récupérer le mot (premier élément de la liste [0]) et le pos (second élément de la liste [1]) en fonction de l'index"
     try:
         line=re.sub(r'\(|\)|\n',r'',lines[index])
         list_line=re.split('/',line)
-        word = list_line[value] #On mettra une value de 0 pour le mot et une value de 1 pour le pos
+        word = list_line[value]
         return word
     except:
         return ''
@@ -92,10 +84,8 @@ while j < len(man_lines) and i <len(auto_lines): #On parcourt la totalité des l
         i += 1
         j += 1
 
-#### FERMETURE DES FICHIERS ####
+#### FERMETURE DU FICHIER DE SORTIE ####
 
-auto_tok_text.close()
-man_tok_text.close()
 textes.close()
 
 #### CALCULs précision, rappel et f-mesure ####
