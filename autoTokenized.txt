@@ -998,6 +998,3 @@
 (de/ADP)
 (Quidditch/PROPN)
 (.../PUNCT)
-(pomme/NOUN)
-(de/DET)
-(terre/NOUN)

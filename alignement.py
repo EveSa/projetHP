@@ -11,7 +11,7 @@ os.chdir("/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/projetH
 
 #version environnement unix
 f = "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/projetHP/autoTokenized.txt"
-g= "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/projetHP/texte_tokenize.txt"
+g= "/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/projetHP/manuallyTokenized.txt"
 
 #version environnement windows
 #f = "C://Users//elisa//Downloads//Enrichissement de corpus//resultat.txt"
@@ -57,7 +57,7 @@ while j < len(man_lines) and i <len(auto_lines): #On parcourt la totalité des l
 
 #Si la taille du mot annoté automatiquement est > à celui annoté manuellement,
 #on considère que c'est parceque le mot est réparti en plusieurs parties sur l'annotation manuelle
-        if len(auto_word) > len(man_word) and re.search(man_word,auto_word) and man_word[-1] != auto_word [-1] :
+        if len(auto_word) > len(man_word) and re.search(man_word,auto_word) is not None and man_word[-1] != auto_word [-1] :
             
             textes.write(auto_word+" " +man_word+"\n")
             textes.write(auto_pos+" " +man_pos+"\n")
@@ -67,7 +67,7 @@ while j < len(man_lines) and i <len(auto_lines): #On parcourt la totalité des l
             auto_lines.insert(i,new_line)
 
 #et inversement
-        elif len(auto_word) < len(man_word) and re.search(man_word,auto_word) and man_word[-1] != auto_word [-1] :
+        elif len(auto_word) < len(man_word) and re.search(auto_word,man_word) is not None and man_word[-1] != auto_word [-1] :
 
             textes.write(auto_word+" " +man_word+"\n")
             textes.write(auto_pos+" " +man_pos+"\n")
@@ -78,7 +78,8 @@ while j < len(man_lines) and i <len(auto_lines): #On parcourt la totalité des l
 
 #Si les deux mots ont la même taille, on peut regarder le POS et vérifier leur adéquation
         else:
-            
+            textes.write(auto_word+" " +man_word+"\n")
+            textes.write(auto_pos+" " +man_pos+"\n")
             if auto_pos == man_pos :
                 vrai_positif +=1 
                 print("+", end="")
