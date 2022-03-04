@@ -331,6 +331,4 @@ Comme nous avons pu le voir à de multiples reprises, l’unité euphorique “t
 
 Il serait donc intéressant de rajouter une catégorie le traitant tel que UEUPH.
 
-Notre projet est disponible en ligne sur Github à l’adresse : https://github.com/EveSa/projetHP
-
 
