@@ -161,9 +161,9 @@ Il suffit pour cela d’inverser le script précédent.
 
 Nous avons besoin, pour réaliser les mesures d'évaluations, du nombre de vrais positifs, faux positifs et faux négatifs.
 
-précision = nb de bon résultats trouvésnb de résultats à trouver=vrai positifvrai positif+faux positif
+précision = nb de bon résultats trouvés/nb de résultats à trouver=vrai positif/(vrai positif+faux positif)
 
-rappel=nb de bon résultats trouvésnb de résultats trouvés=vrai positifvrai positif+faux négatif
+rappel=nb de bon résultats trouvés/nb de résultats trouvés=vrai positif/(vrai positif+faux négatif)
 
 f-mesure=2(précision  rappel)/(précision + rappel)
 
