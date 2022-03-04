@@ -10,7 +10,7 @@ from nltk import word_tokenize
 java_path="/bin/java"
 os.environ['JAVAHOME']=java_path
 
-# Add the jar and model via their path (instead of setting environment variables):
+### On ajoute les variables jar et model (afin de travailler avec le tagger et le modèle d'entraînement que l'on veut)
 
 #version environnement windows
 #jar='C://Users//elisa//Downloads//Enrichissement de corpus//stanford-tagger-4.2.0//stanford-postagger-full-2020-11-17//stanford-postagger.jar'
@@ -21,6 +21,8 @@ os.environ['JAVAHOME']=java_path
 jar="/home/eve/Bureau/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP/stanford-postagger-full-2020-11-17/stanford-postagger.jar"
 model="/home/eve/Bureau/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP/stanford-postagger-full-2020-11-17/models/french-ud.tagger"
 f="/home/eve/Documents/MasterTAL/Semestre2/EnrichissementdeCorpus/Projet_HP/Harry_Potter_T4_Ch6-P1-2.txt"
+
+### Ouverture des fichiers
 
 resultat = open("autoTokenized.txt", "w", encoding="utf-8")
 
